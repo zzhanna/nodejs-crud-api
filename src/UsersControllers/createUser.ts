@@ -1,18 +1,19 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { randomUUID } from "node:crypto";
 import { dataAllUsers } from "../helpers/dataUsers";
+import { IUser } from "./../helpers/interfaceTS";
 
-export const createUser = (req: IncomingMessage, res: ServerResponse) => {
+export const createUser = (req: IncomingMessage, res: ServerResponse): void => {
   if (req.url === "/api/users") {
-    let body = "";
+    let body: string;
     req.on("data", (chunk) => {
       body += chunk.toString();
     });
     req.on("end", () => {
       const id = randomUUID();
-      const newBody = JSON.parse(body);
+      const newBody: IUser = JSON.parse(body);
       const { username, age, hobbies } = newBody;
-      const newUserData = { id, username, age, hobbies };
+      const newUserData: IUser = { id, username, age, hobbies };
       if (username && age && hobbies) {
         dataAllUsers.push(newUserData);
         res.writeHead(201, { "Content-Type": "application/json" });

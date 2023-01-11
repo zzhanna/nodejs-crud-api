@@ -10,6 +10,7 @@
   "author": "Zhanna Bohan",
   "license": "ISC",
   "devDependencies": {
+    "@types/uuid": "^9.0.0",
     "nodemon": "^2.0.20",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
@@ -19,6 +20,7 @@
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.31.0",
-    "prettier": "^2.8.2"
+    "prettier": "^2.8.2",
+    "uuid": "^9.0.0"
   }
 }

@@ -9,18 +9,20 @@ dotenv.config();
 
 const PORT: string | number = process.env.PORT || 5000;
 
-const server = createServer((req: IncomingMessage, res: ServerResponse) => {
-  if (req.method === "GET") {
-    if (req.url === "/api/users") {
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify(dataAllUsers));
-    } else {
-      getUserById(req, res);
+const server = createServer(
+  (req: IncomingMessage, res: ServerResponse): void => {
+    if (req.method === "GET") {
+      if (req.url === "/api/users") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(dataAllUsers));
+      } else {
+        getUserById(req, res);
+      }
     }
-  }
-  if (req.method === "POST") {
-    createUser(req, res);
-  }
-});
+    if (req.method === "POST") {
+      createUser(req, res);
+    }
+  },
+);
 
 server.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
