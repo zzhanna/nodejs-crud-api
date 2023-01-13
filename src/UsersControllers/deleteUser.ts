@@ -16,11 +16,9 @@ export const deleteUser = async (
     try {
       const userById = (await getUserById(req, res)) as IUser;
       const id = userById.id;
-
       if (id) {
         const indUserDel = dataAllUsers.findIndex((el) => el.id === id);
         dataAllUsers.splice(indUserDel, 1);
-        console.log(dataAllUsers);
         getNewDataCode204(res);
       } else {
         invalidDataAboutUserCode400(res);

@@ -12,6 +12,5 @@ export const getBodyRequest = (req: IncomingMessage): Promise<IUser> => {
         const newBody = await JSON.parse(body);
         res(newBody);
       })
-      .on("error", (err) => rej(console.log(err)));
   });
 };

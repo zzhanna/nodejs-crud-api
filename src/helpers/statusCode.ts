@@ -38,7 +38,6 @@ export const getCreatedDataCode201 = (res: ServerResponse, data: IUser[]) => {
   res.end(JSON.stringify(data));
 };
 export const getNewDataCode204 = (res: ServerResponse) => {
-  console.log("g");
   res.writeHead(204, { "Content-Type": "application/json" });
   res.end();
 };
