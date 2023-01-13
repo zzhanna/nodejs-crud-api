@@ -1,34 +1,28 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { randomUUID } from "node:crypto";
 import { dataAllUsers } from "../helpers/dataUsers";
+import { getBodyRequest } from "../helpers/getBodyRequest";
 import { IUser } from "./../helpers/interfaceTS";
+import {
+  getCreatedDataCode201,
+  pageNotFoundCode404,
+} from "./../helpers/statusCode";
 
-export const createUser = (req: IncomingMessage, res: ServerResponse): void => {
+export const createUser = async (
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<void> => {
   if (req.url === "/api/users") {
-    let body: string;
-    req.on("data", (chunk) => {
-      body += chunk.toString();
-    });
-    req.on("end", () => {
-      const id = randomUUID();
-      const newBody: IUser = JSON.parse(body);
-      const { username, age, hobbies } = newBody;
-      const newUserData: IUser = { id, username, age, hobbies };
-      if (username && age && hobbies) {
-        dataAllUsers.push(newUserData);
-        res.writeHead(201, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(dataAllUsers));
-      } else {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({
-            message: `Invalid data (missing some field userName, age or hobbies)`,
-          }),
-        );
-      }
-    });
+    let body: IUser = await getBodyRequest(req);
+    const id = randomUUID();
+    const { username, age, hobbies } = body;
+    const newUserData: IUser = { id, username, age, hobbies };
+    if (username && age && hobbies) {
+      dataAllUsers.push(newUserData);
+      getCreatedDataCode201(res, dataAllUsers);
+    } else {
+    }
   } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(`Page not found`));
+    pageNotFoundCode404(res);
   }
 };

@@ -2,27 +2,34 @@ import { IncomingMessage, ServerResponse } from "http";
 import { dataAllUsers } from "../helpers/dataUsers";
 import { validate as uuidValidate } from "uuid";
 import { IUser } from "./../helpers/interfaceTS";
+import {
+  getOrUpdateDataCode200,
+  pageNotFoundCode404,
+  userIdInvalidCode400,
+  userNotFoundCode404,
+} from "../helpers/statusCode";
 
-export const getUserById = (req: IncomingMessage, res: ServerResponse): void => {
+export const getUserById = (
+  req: IncomingMessage,
+  res: ServerResponse,
+): void | IUser => {
   if (req.url?.startsWith("/api/users/")) {
     const userId: string = req.url?.split("/")[3];
     if (!uuidValidate(userId)) {
-      res.writeHead(400, { "Content-Type": "text/plain" });
-      res.end("userId is invalid");
+      userIdInvalidCode400(res);
     } else {
       const user: IUser | undefined = dataAllUsers.find(
         (el: IUser) => el.id === userId,
       );
       if (!user) {
-        res.writeHead(404, { "Content-Type": "text/plain" });
-        res.end("User not found");
+        userNotFoundCode404(res);
+      } else if (req.method === "GET") {
+        getOrUpdateDataCode200(res, user);
+      } else if (req.method === "PUT" || req.method === "DELETE") {
+        return user;
       } else {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(user));
+        pageNotFoundCode404(res);
       }
     }
-  } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(`Page not found`));
   }
 };

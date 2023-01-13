@@ -4,6 +4,8 @@ import { IncomingMessage, ServerResponse } from "http";
 import { dataAllUsers } from "./helpers/dataUsers";
 import { createUser } from "./UsersControllers/createUser";
 import { getUserById } from "./UsersControllers/getUserById";
+import { updateUser } from "./UsersControllers/updateUser";
+import { deleteUser } from "./UsersControllers/deleteUser";
 
 dotenv.config();
 
@@ -21,6 +23,12 @@ const server = createServer(
     }
     if (req.method === "POST") {
       createUser(req, res);
+    }
+    if (req.method === "PUT") {
+      updateUser(req, res);
+    }
+    if (req.method === "DELETE") {
+      deleteUser(req, res);
     }
   },
 );
