@@ -12,21 +12,17 @@ export const deleteUser = async (
   req: IncomingMessage,
   res: ServerResponse,
 ): Promise<void> => {
-  if (req.url?.startsWith("/api/users/")) {
-    try {
-      const userById = (await getUserById(req, res)) as IUser;
-      const id = userById.id;
-      if (id) {
-        const indUserDel = dataAllUsers.findIndex((el) => el.id === id);
-        dataAllUsers.splice(indUserDel, 1);
-        getNewDataCode204(res);
-      } else {
-        invalidDataAboutUserCode400(res);
-      }
-    } catch {
-      pageNotFoundCode404(res);
+  try {
+    const userById = (await getUserById(req, res)) as IUser;
+    const id = userById.id;
+    if (id) {
+      const indUserDel = dataAllUsers.findIndex((el) => el.id === id);
+      dataAllUsers.splice(indUserDel, 1);
+      getNewDataCode204(res);
+    } else {
+      invalidDataAboutUserCode400(res);
     }
-  } else {
+  } catch {
     pageNotFoundCode404(res);
   }
 };

@@ -6,6 +6,7 @@ import { createUser } from "./UsersControllers/createUser";
 import { getUserById } from "./UsersControllers/getUserById";
 import { updateUser } from "./UsersControllers/updateUser";
 import { deleteUser } from "./UsersControllers/deleteUser";
+import { getOrUpdateDataCode200 } from "./helpers/statusCode";
 
 dotenv.config();
 
@@ -15,8 +16,7 @@ const server = createServer(
   (req: IncomingMessage, res: ServerResponse): void => {
     if (req.method === "GET") {
       if (req.url === "/api/users") {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(dataAllUsers));
+        getOrUpdateDataCode200(res, dataAllUsers);
       } else {
         getUserById(req, res);
       }

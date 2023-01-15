@@ -5,6 +5,7 @@ import { getBodyRequest } from "../helpers/getBodyRequest";
 import { IUser } from "./../helpers/interfaceTS";
 import {
   getCreatedDataCode201,
+  invalidDataAboutUserCode400,
   pageNotFoundCode404,
 } from "./../helpers/statusCode";
 
@@ -21,6 +22,7 @@ export const createUser = async (
       dataAllUsers.push(newUserData);
       getCreatedDataCode201(res, dataAllUsers);
     } else {
+      invalidDataAboutUserCode400(res);
     }
   } else {
     pageNotFoundCode404(res);
