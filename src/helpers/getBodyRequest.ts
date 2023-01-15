@@ -15,7 +15,6 @@ export const getBodyRequest = (
       .on("end", async () => {
         try {
           const newBody = await JSON.parse(body);
-          console.log(newBody);
           resolve(newBody);
         } catch {
           invalidIncomingDataCode400(res);

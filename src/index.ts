@@ -6,7 +6,10 @@ import { createUser } from "./UsersControllers/createUser";
 import { getUserById } from "./UsersControllers/getUserById";
 import { updateUser } from "./UsersControllers/updateUser";
 import { deleteUser } from "./UsersControllers/deleteUser";
-import { getOrUpdateDataCode200 } from "./helpers/statusCode";
+import {
+  getOrUpdateDataCode200,
+  requestNotFoundCode400,
+} from "./helpers/statusCode";
 
 dotenv.config();
 
@@ -20,16 +23,21 @@ const server = createServer(
       } else {
         getUserById(req, res);
       }
+      return;
     }
     if (req.method === "POST") {
       createUser(req, res);
+      return;
     }
     if (req.method === "PUT") {
       updateUser(req, res);
+      return;
     }
     if (req.method === "DELETE") {
       deleteUser(req, res);
+      return;
     }
+    requestNotFoundCode400(res);
   },
 );
 
