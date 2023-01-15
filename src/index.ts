@@ -8,37 +8,43 @@ import { updateUser } from "./UsersControllers/updateUser";
 import { deleteUser } from "./UsersControllers/deleteUser";
 import {
   getOrUpdateDataCode200,
+  pageNotFoundCode404,
   requestNotFoundCode400,
 } from "./helpers/statusCode";
 
-dotenv.config();
+export const serverRun = () => {
+  dotenv.config();
+  const PORT: string | number = Number(process.env.PORT) || 5000;
 
-const PORT: string | number = process.env.PORT || 5000;
-
-const server = createServer(
-  (req: IncomingMessage, res: ServerResponse): void => {
-    if (req.method === "GET") {
-      if (req.url === "/api/users") {
-        getOrUpdateDataCode200(res, dataAllUsers);
-      } else {
-        getUserById(req, res);
+  const server = createServer(
+    (req: IncomingMessage, res: ServerResponse): void => {
+      if (req.method === "GET") {
+        if (req.url === "/api/users") {
+          return getOrUpdateDataCode200(res, dataAllUsers);
+        } else {
+          getUserById(req, res);
+        }
       }
-      return;
-    }
-    if (req.method === "POST") {
-      createUser(req, res);
-      return;
-    }
-    if (req.method === "PUT") {
-      updateUser(req, res);
-      return;
-    }
-    if (req.method === "DELETE") {
-      deleteUser(req, res);
-      return;
-    }
-    requestNotFoundCode400(res);
-  },
-);
+      if (req.method === "POST") {
+        createUser(req, res);
+        return;
+      }
+      if (req.method === "PUT") {
+        updateUser(req, res);
+        return;
+      }
+      if (req.method === "DELETE") {
+        deleteUser(req, res);
+        return;
+      }
+      if (!req.method?.includes("GET" || "POST" || "PUT" || "DELETE")) {
+        return requestNotFoundCode400(res);
+      }
+      return pageNotFoundCode404(res);
+    },
+  );
 
-server.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
+  server.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
+
+  return server;
+};
