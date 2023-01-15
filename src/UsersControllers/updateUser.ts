@@ -16,7 +16,7 @@ export const updateUser = async (
   if (req.url?.startsWith("/api/users/")) {
     try {
       const userById = getUserById(req, res) as IUser;
-      const newBodyReq: IUser = await getBodyRequest(req);
+      const newBodyReq: IUser = await getBodyRequest(req, res);
       const id = userById?.id;
       const { username, age, hobbies } = newBodyReq;
       if (username && age && hobbies) {

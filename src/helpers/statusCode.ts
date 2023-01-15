@@ -1,11 +1,6 @@
 import { ServerResponse } from "http";
 import { IUser } from "./interfaceTS";
 
-export const pageNotFoundCode404 = (res: ServerResponse): void => {
-  res.writeHead(404, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Page not found" }));
-};
-
 export const invalidDataAboutUserCode400 = (res: ServerResponse): void => {
   res.writeHead(400, { "Content-Type": "application/json" });
   res.end(
@@ -15,14 +10,24 @@ export const invalidDataAboutUserCode400 = (res: ServerResponse): void => {
   );
 };
 
-export const userNotFoundCode404 = (res: ServerResponse) => {
-  res.writeHead(404, { "Content-Type": "text/plain" });
-  res.end(JSON.stringify({ message: "User not found" }));
+export const userIdInvalidCode400 = (res: ServerResponse) => {
+  res.writeHead(400, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "UserId is invalid" }));
 };
 
-export const userIdInvalidCode400 = (res: ServerResponse) => {
-  res.writeHead(400, { "Content-Type": "text/plain" });
-  res.end(JSON.stringify({ message: "userId is invalid" }));
+export const invalidIncomingDataCode400 = (res: ServerResponse) => {
+  res.writeHead(400, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Invalid incoming data" }));
+};
+
+export const pageNotFoundCode404 = (res: ServerResponse): void => {
+  res.writeHead(404, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Page not found" }));
+};
+
+export const userNotFoundCode404 = (res: ServerResponse) => {
+  res.writeHead(404, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "User not found" }));
 };
 
 export const getOrUpdateDataCode200 = (

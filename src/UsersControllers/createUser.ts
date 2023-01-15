@@ -14,7 +14,7 @@ export const createUser = async (
   res: ServerResponse,
 ): Promise<void> => {
   if (req.url === "/api/users") {
-    let body: IUser = await getBodyRequest(req);
+    let body: IUser = await getBodyRequest(req, res);
     const id = randomUUID();
     const { username, age, hobbies } = body;
     const newUserData: IUser = { id, username, age, hobbies };
