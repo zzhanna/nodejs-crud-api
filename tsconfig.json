@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
     "target": "ES6",
-    "module": "commonjs",
+    "module": "Node16",
+    "moduleResolution": "Node",
     "removeComments": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true
   },
-  "exclude": ["node_modules", "test", "build"],
-  "include": ["src"]
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", "build", "./**/*.js"]
 }
