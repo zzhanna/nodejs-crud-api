@@ -14,7 +14,7 @@ import {
 
 export const serverRun = () => {
   dotenv.config();
-  const PORT: string | number = Number(process.env.PORT) || 5000;
+  const PORT: number = Number(process.env.PORT) || 5000;
 
   const server = createServer(
     (req: IncomingMessage, res: ServerResponse): void => {
