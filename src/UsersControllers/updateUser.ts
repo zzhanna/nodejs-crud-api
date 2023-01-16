@@ -6,8 +6,10 @@ import { getUserById } from "./getUserById";
 import {
   getOrUpdateDataCode200,
   invalidDataAboutUserCode400,
+  notValidDataAboutUserCode400,
   pageNotFoundCode404,
 } from "../helpers/statusCode";
+import { isBodyDataValid } from "../helpers/isDataValid";
 
 export const updateUser = async (
   req: IncomingMessage,
@@ -19,7 +21,8 @@ export const updateUser = async (
       const newBodyReq: IUser = await getBodyRequest(req, res);
       const id = userById?.id;
       const { username, age, hobbies } = newBodyReq;
-      if (username && age && hobbies) {
+      const validate = isBodyDataValid(username, age, hobbies);
+      if (username && age && hobbies && validate) {
         dataAllUsers.map((el) => {
           if (el.id === id) {
             el.username = username;
@@ -29,7 +32,9 @@ export const updateUser = async (
         });
         getOrUpdateDataCode200(res, dataAllUsers);
       } else {
-        invalidDataAboutUserCode400(res);
+        validate
+          ? invalidDataAboutUserCode400(res)
+          : notValidDataAboutUserCode400(res);
       }
     } catch {
       pageNotFoundCode404(res);

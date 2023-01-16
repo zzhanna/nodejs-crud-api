@@ -15,16 +15,12 @@ export const getCreatedDataCode201 = (res: ServerResponse, data: IUser[]) => {
 };
 export const getNewDataCode204 = (res: ServerResponse) => {
   res.writeHead(204, { "Content-Type": "application/json" });
-  res.end();
+  res.end(JSON.stringify({ message: "User deleted" }));
 };
 
 export const invalidDataAboutUserCode400 = (res: ServerResponse): void => {
   res.writeHead(400, { "Content-Type": "application/json" });
-  res.end(
-    JSON.stringify({
-      message: "Invalid data (missing some field username, age or hobbies)",
-    }),
-  );
+  res.end();
 };
 
 export const notValidDataAboutUserCode400 = (res: ServerResponse) => {
