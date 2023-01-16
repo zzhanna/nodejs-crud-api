@@ -1,3 +1,3 @@
-import { serverRun } from "./server";
+import { serverRun, PORT } from "./server";
 
-serverRun();
+serverRun.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));

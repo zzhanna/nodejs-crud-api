@@ -6,7 +6,8 @@
   "scripts": {
     "start:dev": "nodemon src/index.ts",
     "start:prod": "npx webpack && node ./dist/bundle.js",
-    "test": "jest"
+    "test": "jest",
+    "start:multi": "nodemon src/multi/multiAPI.ts"
   },
   "author": "Zhanna Bohan",
   "license": "ISC",

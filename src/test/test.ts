@@ -1,8 +1,8 @@
 import supertest from "supertest";
-import { serverRun } from "../server";
+import { serverRun, PORT } from "../server";
 import { IUser } from "./../helpers/interfaceTS";
 
-const app = serverRun();
+const app = serverRun.listen(PORT);
 
 const invalidData = `{username: "Pete", age: 10,,,,}`;
 let idUser: string;
